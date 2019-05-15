@@ -22,6 +22,11 @@ function viewLowInventory(callback){
         });
     })
 }
+function viewInventoryForManager(callback){
+    dbQueries.doQuery('SELECT * FROM products', function(error, data) {
+        printTable(data, callback);
+    });
+}
 
 function printTable(result, callback){
     var displayTable = new table({
@@ -45,14 +50,60 @@ function printTable(result, callback){
 }
 
 function addInventory(callback){
-    
+    bamazonCustomer.displayInventory(function(){
+        addInventoryhelper(callback);
+    });
+}
+
+function addInventoryhelper(callback){
+    inquirer.prompt([
+        {
+			type: 'input',
+			name: 'item_id',
+			message: 'What is the ID number of the product you want to add inventory for',
+			validate: validateInput,
+			filter: Number
+		},
+		{
+			type: 'input',
+			name: 'quantity',
+			message: 'How many items do you want to add to the inventory?',
+			validate: validateInput,
+			filter: Number
+		}
+    ])
+    .then(function(answer){
+        let querySelect = "SELECT * FROM products WHERE item_id ="+ answer.item_id
+        let queryUpdate = "UPDATE products SET stock_quantity = stock_quantity + "+ answer.quantity + " WHERE item_id = " + answer.item_id;
+        dbQueries.doQuery(queryUpdate, function(error, data){
+            if (error){ throw new Error("database error: "+error)}
+        else{
+            console.log("Updated prodcut List")
+            viewInventoryForManager(function(){
+                mainMenu.showMainMenu(managerOptions, callback);
+            })
+            // callback();
+        }
+        })
+    })
+}
+
+function validateInput(value){
+    var integer = Number.isInteger(parseFloat(value));
+	var sign = Math.sign(value);
+
+	if (integer && (sign === 1)) {
+		return true;
+	} else {
+		return "Please enter a whole non-zero number.";
+	}
 }
 
 
 const managerOptions = {
     "View Products": viewProducts,
     "View Low Inventory": viewLowInventory,
-    // "Add to Inventory": addInventory,
+    "Add to Inventory": addInventory,
     // "Add New Product": addNewProduct,
     "back to Main Menu": backToMainMenu,
 };

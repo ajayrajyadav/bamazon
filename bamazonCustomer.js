@@ -51,7 +51,7 @@ function purchase(callback) {
 		}
 	])
     .then(function(answer){
-        console.log(callback);
+        // console.log(callback);
         queryDatabaseForSingleItem(answer, callback)
     })
 }
