@@ -18,8 +18,9 @@ function selectAllRecords(callback) {
 // }
 
 function showItems(callback) {
-  bamazonCustomer.displayInventory(callback);
-  bamazonCustomer.purchase(callback);
+  bamazonCustomer.displayInventory(function(){
+    bamazonCustomer.purchase(callback);
+  });
   // addItem.displayNewItemMenu(callback);
 }
 

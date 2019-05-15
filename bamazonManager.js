@@ -6,6 +6,7 @@ const boxen = require('boxen');
 const dbQueries = require('./dbQueries');
 const bamazonCustomer = require('./bamazonCustomer');
 
+
 function viewProducts(callback) {
     bamazonCustomer.displayInventory(callback);
 }
@@ -31,19 +32,15 @@ function showManagerMenu(options, callback) {
             choices: Object.keys(options)
         }
     ])
-    .then(function(selection){
-        const behavior = options[selection.selectedOption];
-        behavior(callback)
-    })
+        .then(function (selection) {
+            const behavior = options[selection.selectedOption];
+            behavior(callback)
+        })
 
 }
 
-function printManagerOptions(error, callback){
-    if(error){
-        console.log(error)
-    }else{
-        showManagerMenu(managerOptions, callback)
-    }
+function printManagerOptions(callback) {
+    showManagerMenu(managerOptions, callback)ß
 }
 
 // printManagerOptions();
