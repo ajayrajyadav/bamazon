@@ -40,7 +40,7 @@ function showManagerMenu(options, callback) {
 }
 
 function printManagerOptions(callback) {
-    showManagerMenu(managerOptions, callback)ß
+    showManagerMenu(managerOptions, callback)
 }
 
 // printManagerOptions();
