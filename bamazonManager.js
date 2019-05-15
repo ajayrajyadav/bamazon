@@ -48,7 +48,7 @@ function printTable(result, callback){
     console.log("\n");
     callback();
 }
-
+//adding new inventory
 function addInventory(callback){
     bamazonCustomer.displayInventory(function(){
         addInventoryhelper(callback);
@@ -99,33 +99,84 @@ function validateInput(value){
 	}
 }
 
+function addNewProduct(callback){
+    prodcutQuestions(callback)
+}
 
+var departments = function(){
+    let queryString = "SELECT DISTINCT department_name FROM products";
+    var departments = [];
+    dbQueries.doQuery(queryString, function(error, data) {
+        if (error)
+        { 
+            throw new Error(error);
+        }
+        else{
+            data.forEach(element => {
+                // console.log("Element: " + element.department_name)
+                departments.push(element.department_name);
+            });
+            // console.log("Outside for loop inside else: " +departments)
+
+            return departments;
+        }
+        // console.log("Outside of else: " +departments)
+    })
+    // console.log(departments)
+}
+
+function prodcutQuestions(callback){
+    inquirer.prompt([
+        {
+            type: 'input',
+			name: 'productName',
+			message: 'Please enter the name of the prodcut.',
+        },
+        {
+            type: "list",
+            name: "departmentName",
+            message: "enter department name",
+            choices: departments
+        }
+    ])
+    .then(function(data){
+        console.log(data);
+    })
+}
+var departments = function(){
+    let queryString = "SELECT DISTINCT department_name FROM products";
+    var d = [];
+    dbQueries.doQuery(queryString, function(error, data) {
+        if (error)
+        { 
+            throw new Error(error);
+        }
+        else{
+            data.forEach(element => {
+                // console.log("Element: " + element.department_name)
+                d.push(element.department_name);
+            });
+            // console.log("Outside for loop inside else: " +departments)
+
+            return d;
+        }
+        // console.log("Outside of else: " +departments)
+    })
+    // console.log(departments)
+}
+
+//question menu
 const managerOptions = {
     "View Products": viewProducts,
     "View Low Inventory": viewLowInventory,
     "Add to Inventory": addInventory,
-    // "Add New Product": addNewProduct,
+    "Add New Product": addNewProduct,
     "back to Main Menu": backToMainMenu,
 };
 
 function backToMainMenu(callback) {
     callback();
 }
-
-// function showManagerMenu(options, callback) {
-//     inquirer.prompt([
-//         {
-//             name: 'selectedOption',
-//             type: 'list',
-//             choices: Object.keys(options)
-//         }
-//     ])
-//         .then(function (selection) {
-//             const behavior = options[selection.selectedOption];
-//             behavior(callback)
-//         })
-
-// }
 
 function printManagerOptions(callback) {
     // showManagerMenu(managerOptions, callback)
