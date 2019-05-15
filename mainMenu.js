@@ -12,7 +12,7 @@ function showMainMenu(options, callback) {
   ])
   .then(function(selection){
     const behavior = options[selection.selectedOption];
-    console.log(options)
+    // console.log(options)
     behavior(callback);
   });
 }

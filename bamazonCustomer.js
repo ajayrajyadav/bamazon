@@ -1,22 +1,14 @@
 var inquirer = require("inquirer");
 var colors = require("colors/safe")
 var table = require('cli-table');
+const boxen = require('boxen');
 // const dbConnection = require('./dbConnection');
 const dbQueries = require('./dbQueries');
 
 function displayInventory(callback){
-
     dbQueries.doQuery('SELECT item_id, product_name, price FROM Products', function(error, data) {
         printTable(data, callback);
     })
-
-    // dbQueries.selectAllRecords(function(error, data) {
-    //     // console.log(data);
-    //     printTable(data, callback);
-    //     // callback(error, data);
-    // });
-    // dbConnection.query("SELECT item_id, product_name, price FROM Products", callback);
-    // console.log(data);
 }
 
 function printTable(result, callback) {
@@ -36,9 +28,9 @@ function printTable(result, callback) {
     }
     console.log("\n")
     console.log(displayTable.toString());
-    console.log("\n")
-    
-    purchase(callback);
+    console.log("\n");
+    callback();
+    // purchase(callback);
 }
 
 function purchase(callback) {
@@ -59,7 +51,7 @@ function purchase(callback) {
 		}
 	])
     .then(function(answer){
-        // console.log(answer);
+        console.log(callback);
         queryDatabaseForSingleItem(answer, callback)
     })
 }
@@ -76,7 +68,6 @@ function validateInput(value){
 }
 
 function queryDatabaseForSingleItem(answer, callback){
-    console.log(answer);
     let queryString = "SELECT * FROM products WHERE item_id=" + answer.item_id
     dbQueries.doQuery(queryString, function(error, data) {
         updateStock(data, answer, callback);
@@ -87,12 +78,11 @@ function queryDatabaseForSingleItem(answer, callback){
 
 function updateStock(data, value, callback){
     if (data[0].stock_quantity < value.quantity) {
-        console.log("That product is out of stock, please pick again. \n")
-        main();
+        console.log(boxen("That product is out of stock, please pick again. \n", {padding: 1}))
+        displayInventory(callback);
     } else if (data[0].stock_quantity >= value.quantity) {
-        console.log(value.quantity + " items purchased of " + data[0].product_name + " at $" + data[0].price)
         var saleTotal = data[0].price * value.quantity;
-        console.log("Your Total is $" + saleTotal)
+        console.log(boxen(value.quantity + " items purchased of " + data[0].product_name + " priced at $" + data[0].price +"each\n" + "Your Total is $" + saleTotal, {padding: 1}))
         let newQty = data[0].stock_quantity - value.quantity;
         updateStockInDatabase(newQty, value, callback);
     }
@@ -102,13 +92,18 @@ function updateStock(data, value, callback){
 }
 
 function updateStockInDatabase(newQty, value, callback){
-    console.log(callback)
-    callback();
+    let queryString = "UPDATE products SET stock_quantity= "+ newQty +" WHERE item_id= "+ value.item_id;
+    dbQueries.doQuery(queryString, function(error, data) {
+        if (error){ throw new Error()}
+        else{
+            // console.log(callback)
+            callback();
+        }
+    })
+    // callback();
 }
 
-
-
-
 module.exports = {
-    displayInventory: displayInventory
+    displayInventory: displayInventory,
+    purchase : purchase
   };
