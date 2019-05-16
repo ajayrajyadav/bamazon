@@ -100,11 +100,13 @@ function validateInput(value){
 }
 
 function addNewProduct(callback){
-    prodcutQuestions(callback)
+    let departmentChoics = getDepartmentArray();
+    console.log("inside addnewproduct: " + departmentChoics);
 }
 
-var departments = function(){
-    let queryString = "SELECT DISTINCT department_name FROM products";
+function getDepartmentArray(){
+    // let queryString = "SELECT DISTINCT department_name FROM products";
+    let queryString = "SELECT department_name FROM products";
     var departments = [];
     dbQueries.doQuery(queryString, function(error, data) {
         if (error)
@@ -116,10 +118,10 @@ var departments = function(){
                 // console.log("Element: " + element.department_name)
                 departments.push(element.department_name);
             });
-            // console.log("Outside for loop inside else: " +departments)
-
+            
             return departments;
         }
+        console.log("Outside for loop inside else: " +departments)
         // console.log("Outside of else: " +departments)
     })
     // console.log(departments)
