@@ -19,8 +19,13 @@ function addNewItem(itemData, callback) {
     );
 }
 
+function doQueryNewDatabase(databaseName, queryString, callback){
+  dbConnection.changeDatabase(databaseName, queryString, callback);
+}
+
 module.exports = {
   addNewItem: addNewItem,
   selectAllRecords: selectAllRecords,
-  doQuery: doQuery
+  doQuery: doQuery,
+  doQueryNewDatabase : doQueryNewDatabase
 };

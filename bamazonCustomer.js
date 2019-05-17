@@ -77,6 +77,10 @@ function queryDatabaseForSingleItem(answer, callback){
 }
 
 function updateStock(data, value, callback){
+    // console.log(data);
+    let department = data[0].department_name;
+    console.log("department_name:" + department);
+    
     if (data[0].stock_quantity < value.quantity) {
         console.log(boxen("That product is out of stock, please pick again. \n", {padding: 1}))
         displayInventory(callback);
@@ -84,23 +88,37 @@ function updateStock(data, value, callback){
         var saleTotal = data[0].price * value.quantity;
         console.log(boxen(value.quantity + " items purchased of " + data[0].product_name + " priced at $" + data[0].price +"each\n" + "Your Total is $" + saleTotal, {padding: 1}))
         let newQty = data[0].stock_quantity - value.quantity;
-        updateStockInDatabase(newQty, value, callback);
+        
+        updateStockInDatabase(newQty, value, department, saleTotal, callback);
     }
 
 
     // callback();
 }
 
-function updateStockInDatabase(newQty, value, callback){
+function updateStockInDatabase(newQty, value, departmentName, saleTotal, callback){
     let queryString = "UPDATE products SET stock_quantity= "+ newQty +" WHERE item_id= "+ value.item_id;
+    
     dbQueries.doQuery(queryString, function(error, data) {
+        if (error){ throw new Error()}
+        else{
+            // console.log(callback)
+            updateTotalSales(departmentName, saleTotal, callback)
+        }
+    })
+    // callback();
+}
+
+function updateTotalSales(departmentName, saleTotal, callback){
+    let queryString = "UPDATE departments SET totalSales = totalSales + " + saleTotal + " WHERE departmentName = " + departmentName;
+    console.log(queryString);
+    dbQueries.doQueryNewDatabase("Departments", queryString, function(error, data){
         if (error){ throw new Error()}
         else{
             // console.log(callback)
             callback();
         }
     })
-    // callback();
 }
 
 module.exports = {
