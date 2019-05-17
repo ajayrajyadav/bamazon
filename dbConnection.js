@@ -30,19 +30,6 @@ function query(queryString, queryParams, callback) {
   });
 }
 
-function changeDatabase(databaseName, queryString, queryParams, callback){
-  const connection = mysql.createConnection(dbConfig);
-  connection.connect();
-  connection.changeUser({database: databaseName});
-  connection.query(queryString, queryParams, function(error, data) {
-    callback(error, data);
-    connection.end(function(error) {
-      console.log('Connection closed');
-    });
-  });
-}
-
 module.exports = {
-  query: query,
-  changeDatabase : changeDatabase
+  query: query
 };

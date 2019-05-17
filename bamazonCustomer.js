@@ -110,10 +110,10 @@ function updateStockInDatabase(newQty, value, departmentName, saleTotal, callbac
 }
 
 function updateTotalSales(departmentName, saleTotal, callback){
-    let queryString = "UPDATE departments SET totalSales = totalSales + " + saleTotal + " WHERE departmentName = " + departmentName;
-    console.log(queryString);
-    dbQueries.doQueryNewDatabase("Departments", queryString, function(error, data){
-        if (error){ throw new Error()}
+    let queryString = "UPDATE departments SET totalSales = totalSales + " + saleTotal + " WHERE departmentName = \"" + departmentName + "\"";
+    // console.log(queryString);
+    dbQueries.doQuery(queryString, function(error, data) {
+        if (error){ throw new Error("this is the error: " + error)}
         else{
             // console.log(callback)
             callback();

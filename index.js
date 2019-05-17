@@ -2,6 +2,7 @@ const dbQueries = require('./dbQueries');
 const mainMenu = require('./mainMenu');
 const bamazonCustomer = require('./bamazonCustomer');
 const bamazonManager = require('./bamazonManager');
+const bamazonExec = require('./bamazonExecutive');
 const addItem = require('./addItem');
 
 
@@ -29,6 +30,10 @@ function displayManagerMenu(callback){
   bamazonManager.printManagerOptions(callback)
 }
 
+function displayExecMenu(callback){
+  bamazonExec.printExecutiveOptions(callback)
+}
+
 function exit(callback) {
   callback(null, null);
   process.exit();
@@ -43,7 +48,7 @@ function exit(callback) {
 const menuOptions = {
   "Customer": showItems,
   "Manager": displayManagerMenu,
-  // "Executive": bamazonExec,
+  "Executive": displayExecMenu,
   "Exit": exit
 };
 
