@@ -100,13 +100,14 @@ function validateInput(value) {
 }
 
 function addNewProduct(callback) {
-    addNewProductHelper(callback);
+    getDepartments(callback);
+    // addNewProductHelper(callback);
 }
 
 
 
 function getDepartments(callback) {
-    let queryString = "SELECT DISTINCT department_name FROM products";
+    let queryString = "SELECT DepartmentName FROM departments";
     var departments = [];
     dbQueries.doQuery(queryString, function (error, data) {
         if (error) {
@@ -115,15 +116,14 @@ function getDepartments(callback) {
         else {
             data.forEach(element => {
                 // console.log("Element: " + element.department_name)
-                departments.push(element.department_name);
+                departments.push(element.DepartmentName);
             });
-            return departments;
+            addNewProductHelper(departments, callback)
         }
     })
 }
 
-function addNewProductHelper(callback) {
-
+function addNewProductHelper(departments, callback) {
     inquirer.prompt([
         {
             type: 'input',
@@ -131,9 +131,10 @@ function addNewProductHelper(callback) {
             message: 'Please enter the name of the prodcut.',
         },
         {
-            type: "input",
+            type: "list",
             name: "departmentName",
             message: "enter department name",
+            choices: departments
         },
         {
             type: "input",
