@@ -8,7 +8,6 @@ const bamazonCustomer = require('./bamazonCustomer');
 const mainMenu = require('./mainMenu');
 
 function ViewProductSales(callback) {
-    console.log("in viewProduct function");
     let query = "SELECT * FROM totalprofits";
     dbQueries.doQuery(query, function (error, data) {
         printTable(data, function () {
@@ -18,8 +17,6 @@ function ViewProductSales(callback) {
 }
 
 function printTable(result, callback) {
-    console.log(result);
-    
     var displayTable = new table({
         head: ['Department ID', 'Department Name', 'Overhead Cost', 'Total Sales', 'Total Profit'],
         style: {
@@ -34,7 +31,7 @@ function printTable(result, callback) {
             [result[i].DepartmentID, result[i].DepartmentName, result[i].OverHeadCosts, result[i].TotalSales, result[i].TotalProfit]
         )
     }
-    
+    console.log(displayTable)
     console.log("\n")
     console.log(displayTable.toString());
     console.log("\n");
@@ -42,9 +39,7 @@ function printTable(result, callback) {
 }
 
 function createDepartment(callback) {
-    bamazonCustomer.displayInventory(function () {//need to take this out.
-        addCustomerHelper(callback);
-    });
+    addCustomerHelper(callback);
 }
 
 function addCustomerHelper(callback){
@@ -63,7 +58,16 @@ function addCustomerHelper(callback){
     ])
     .then(function (answer){
         let queryInsert = "INSERT INTO departments(DepartmentName, OverHeadCosts, TotalSales) VALUES (\"" + answer.deptName + "\"," + answer.overheadCost + ", 0.0)";
-        console.log(queryInsert) 
+        dbQueries.doQuery(queryInsert, function (error, data) {
+            if (error) { throw new Error("database error: " + error) }
+            else {
+                console.log("Updated department List")
+                ViewProductSales(function () {
+                    mainMenu.showMainMenu(executiveOptions, callback);
+                })
+                // callback();
+            }
+        })
     })
 }
 

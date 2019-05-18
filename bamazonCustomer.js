@@ -4,12 +4,21 @@ var table = require('cli-table');
 const boxen = require('boxen');
 // const dbConnection = require('./dbConnection');
 const dbQueries = require('./dbQueries');
+const mainMenu = require('./mainMenu');
+
+
+function calltheDatabase(callback){
+    displayInventory(function(){
+        mainMenu.showMainMenu(customerOptions,callback);
+    })
+}
 
 function displayInventory(callback){
     dbQueries.doQuery('SELECT item_id, product_name, price FROM Products', function(error, data) {
         printTable(data, callback);
     })
 }
+
 
 function printTable(result, callback) {
     var displayTable = new table({
@@ -116,12 +125,28 @@ function updateTotalSales(departmentName, saleTotal, callback){
         if (error){ throw new Error("this is the error: " + error)}
         else{
             // console.log(callback)
-            callback();
+            mainMenu.showMainMenu(customerOptions, callback)
         }
     })
 }
 
+//question menu
+const customerOptions = {
+    "Display Inventory": calltheDatabase,
+    "Purchase an Item": purchase,
+    "back to Main Menu": backToMainMenu
+};
+
+function backToMainMenu(callback) {
+    callback();
+}
+
+function printCustomerOptions(callback) {
+    mainMenu.showMainMenu(customerOptions, callback)
+}
+
 module.exports = {
+    printCustomerOptions : printCustomerOptions,
     displayInventory: displayInventory,
     purchase : purchase
   };

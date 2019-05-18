@@ -25,6 +25,10 @@ function showItems(callback) {
   // addItem.displayNewItemMenu(callback);
 }
 
+function displayCustomerMenu(callback){
+  bamazonCustomer.printCustomerOptions(callback)
+}
+
 
 function displayManagerMenu(callback){
   bamazonManager.printManagerOptions(callback)
@@ -46,7 +50,7 @@ function exit(callback) {
 // };
 
 const menuOptions = {
-  "Customer": showItems,
+  "Customer": displayCustomerMenu,
   "Manager": displayManagerMenu,
   "Executive": displayExecMenu,
   "Exit": exit
