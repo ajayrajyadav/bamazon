@@ -61,7 +61,7 @@ function addCustomerHelper(callback){
         dbQueries.doQuery(queryInsert, function (error, data) {
             if (error) { throw new Error("database error: " + error) }
             else {
-                console.log("Updated department List")
+                console.log(boxen("Updated department List"))
                 ViewProductSales(function () {
                     mainMenu.showMainMenu(executiveOptions, callback);
                 })
