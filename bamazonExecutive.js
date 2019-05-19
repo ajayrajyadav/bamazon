@@ -44,12 +44,12 @@ function addCustomerHelper(callback){
         {
             type: 'input',
             name: 'deptName',
-            message: 'Please enter the nae of the new department you would like to add.',
+            message: 'Please enter the name of the new department you would like to add.',
         },
         {
             type: 'input',
             name: 'overheadCost',
-            message: 'What are the overhead costs for theis department?',
+            message: 'What are the overhead costs for this department?',
             filter: Number
         }
     ])
@@ -59,9 +59,10 @@ function addCustomerHelper(callback){
             if (error) { throw new Error("database error: " + error) }
             else {
                 console.log(boxen("Updated department List"))
-                ViewProductSales(function () {
-                    mainMenu.showMainMenu(executiveOptions, "Executive Menu",callback);
-                });
+                ViewProductSales(callback);
+                // ViewProductSales(function () {
+                //     mainMenu.showMainMenu(executiveOptions, "Executive Menu",callback);
+                // });
             }
         });
     });

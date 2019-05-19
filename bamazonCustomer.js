@@ -87,10 +87,10 @@ function updateStock(data, value, callback){
     
     if (data[0].stock_quantity < value.quantity) {
         console.log(boxen("That product is out of stock, please pick again. \n", {padding: 1}))
-        displayInventory(callback);
+        mainMenu.showMainMenu(customerOptions, "Customer Menu", callback)
     } else if (data[0].stock_quantity >= value.quantity) {
         var saleTotal = data[0].price * value.quantity;
-        console.log(boxen(value.quantity + " items purchased of " + data[0].product_name + " priced at $" + data[0].price +"each\n" + "Your Total is $" + saleTotal, {padding: 1}))
+        console.log(boxen(value.quantity + " items purchased of " + data[0].product_name + " priced at $" + data[0].price +" each\n" + "Your Total is $" + saleTotal, {padding: 1}))
         let newQty = data[0].stock_quantity - value.quantity;
         
         updateStockInDatabase(newQty, value, department, saleTotal, callback);

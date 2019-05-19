@@ -1,6 +1,7 @@
 const inquirer = require('inquirer');
 
 function showMainMenu(options, menuname, callback) {
+  console.log("\n\n");
   const userOptions = Object.keys(options);
 
   inquirer.prompt([
