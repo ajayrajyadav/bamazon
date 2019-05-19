@@ -9,7 +9,7 @@ const mainMenu = require('./mainMenu');
 
 function calltheDatabase(callback){
     displayInventory(function(){
-        mainMenu.showMainMenu(customerOptions,callback);
+        mainMenu.showMainMenu(customerOptions, "Customer Menu",callback);
     })
 }
 
@@ -39,7 +39,6 @@ function printTable(result, callback) {
     console.log(displayTable.toString());
     console.log("\n");
     callback();
-    // purchase(callback);
 }
 
 function purchase(callback) {
@@ -60,7 +59,6 @@ function purchase(callback) {
 		}
 	])
     .then(function(answer){
-        // console.log(callback);
         queryDatabaseForSingleItem(answer, callback)
     })
 }
@@ -81,12 +79,9 @@ function queryDatabaseForSingleItem(answer, callback){
     dbQueries.doQuery(queryString, function(error, data) {
         updateStock(data, answer, callback);
     })
-
-    // callback();
 }
 
 function updateStock(data, value, callback){
-    // console.log(data);
     let department = data[0].department_name;
     console.log("department_name:" + department);
     
@@ -100,9 +95,6 @@ function updateStock(data, value, callback){
         
         updateStockInDatabase(newQty, value, department, saleTotal, callback);
     }
-
-
-    // callback();
 }
 
 function updateStockInDatabase(newQty, value, departmentName, saleTotal, callback){
@@ -111,7 +103,6 @@ function updateStockInDatabase(newQty, value, departmentName, saleTotal, callbac
     dbQueries.doQuery(queryString, function(error, data) {
         if (error){ throw new Error()}
         else{
-            // console.log(callback)
             updateTotalSales(departmentName, saleTotal, callback)
         }
     })
@@ -120,12 +111,10 @@ function updateStockInDatabase(newQty, value, departmentName, saleTotal, callbac
 
 function updateTotalSales(departmentName, saleTotal, callback){
     let queryString = "UPDATE departments SET totalSales = totalSales + " + saleTotal + " WHERE departmentName = \"" + departmentName + "\"";
-    // console.log(queryString);
     dbQueries.doQuery(queryString, function(error, data) {
         if (error){ throw new Error("this is the error: " + error)}
         else{
-            // console.log(callback)
-            mainMenu.showMainMenu(customerOptions, callback)
+            mainMenu.showMainMenu(customerOptions, "Customer Menu", callback)
         }
     })
 }
@@ -134,7 +123,7 @@ function updateTotalSales(departmentName, saleTotal, callback){
 const customerOptions = {
     "Display Inventory": calltheDatabase,
     "Purchase an Item": purchase,
-    "back to Main Menu": backToMainMenu
+    "Back to Main Menu": backToMainMenu
 };
 
 function backToMainMenu(callback) {
@@ -142,7 +131,7 @@ function backToMainMenu(callback) {
 }
 
 function printCustomerOptions(callback) {
-    mainMenu.showMainMenu(customerOptions, callback)
+    mainMenu.showMainMenu(customerOptions, "Customer Menu", callback)
 }
 
 module.exports = {

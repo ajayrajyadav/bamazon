@@ -10,7 +10,7 @@ const mainMenu = require('./mainMenu');
 
 function viewProducts(callback) {
     bamazonCustomer.displayInventory(function () {
-        mainMenu.showMainMenu(managerOptions, callback);
+        mainMenu.showMainMenu(managerOptions, "Manager Menu" , callback);
     });
 }
 
@@ -18,7 +18,7 @@ function viewLowInventory(callback) {
     let query = "SELECT * FROM products WHERE stock_quantity < 5"
     dbQueries.doQuery(query, function (error, data) {
         printTable(data, function () {
-            mainMenu.showMainMenu(managerOptions, callback);
+            mainMenu.showMainMenu(managerOptions, "Manager Menu" , callback);
         });
     })
 }
@@ -80,7 +80,7 @@ function addInventoryhelper(callback) {
                 else {
                     console.log("Updated prodcut List")
                     viewInventoryForManager(function () {
-                        mainMenu.showMainMenu(managerOptions, callback);
+                        mainMenu.showMainMenu(managerOptions, "Manager Menu" , callback);
                     })
                     // callback();
                 }
@@ -115,7 +115,6 @@ function getDepartments(callback) {
         }
         else {
             data.forEach(element => {
-                // console.log("Element: " + element.department_name)
                 departments.push(element.DepartmentName);
             });
             addNewProductHelper(departments, callback)
@@ -152,13 +151,12 @@ function addNewProductHelper(departments, callback) {
         .then(function (answer) {
             console.log(answer);
             let queryInsert = 'INSERT INTO products(product_name, department_name, price, stock_quantity, product_sales) VALUES (\"' + answer.productName +'\",\"' + answer.departmentName + '\",' +answer.price + ',' + answer.qty + ', 0.0)' 
-            console.log(queryInsert)
             dbQueries.doQuery(queryInsert, function(error, data){
                 if (error) { throw new Error("database error: " + error) }
                 else{
-                    console.log("New prodcut "+ answer.productName + " has been added");
+                    console.log(boxen("New prodcut "+ answer.productName + " has been added"));
                     viewInventoryForManager(function(){
-                        mainMenu.showMainMenu(managerOptions,callback)
+                        mainMenu.showMainMenu(managerOptions, "Manager Menu" ,callback)
                     })
                 }
             });          
@@ -180,11 +178,8 @@ function backToMainMenu(callback) {
 }
 
 function printManagerOptions(callback) {
-    // showManagerMenu(managerOptions, callback)
-    mainMenu.showMainMenu(managerOptions, callback)
+    mainMenu.showMainMenu(managerOptions, "Manager Menu" , callback)
 }
-
-// printManagerOptions();
 
 module.exports = {
     printManagerOptions: printManagerOptions

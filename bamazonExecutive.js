@@ -1,8 +1,6 @@
 var inquirer = require("inquirer");
-var colors = require("colors/safe")
 var table = require('cli-table');
 const boxen = require('boxen');
-// const dbConnection = require('./dbConnection');
 const dbQueries = require('./dbQueries');
 const bamazonCustomer = require('./bamazonCustomer');
 const mainMenu = require('./mainMenu');
@@ -11,7 +9,7 @@ function ViewProductSales(callback) {
     let query = "SELECT * FROM totalprofits";
     dbQueries.doQuery(query, function (error, data) {
         printTable(data, function () {
-            mainMenu.showMainMenu(executiveOptions, callback);
+            mainMenu.showMainMenu(executiveOptions, "Executive Menu",callback);
         });
     })
 }
@@ -31,7 +29,6 @@ function printTable(result, callback) {
             [result[i].DepartmentID, result[i].DepartmentName, result[i].OverHeadCosts, result[i].TotalSales, result[i].TotalProfit]
         )
     }
-    console.log(displayTable)
     console.log("\n")
     console.log(displayTable.toString());
     console.log("\n");
@@ -63,12 +60,11 @@ function addCustomerHelper(callback){
             else {
                 console.log(boxen("Updated department List"))
                 ViewProductSales(function () {
-                    mainMenu.showMainMenu(executiveOptions, callback);
-                })
-                // callback();
+                    mainMenu.showMainMenu(executiveOptions, "Executive Menu",callback);
+                });
             }
-        })
-    })
+        });
+    });
 }
 
 const executiveOptions = {
@@ -77,11 +73,11 @@ const executiveOptions = {
     "Back to Main Menu": backToMainMenu
 }
 
-function backToMainMenu(Callback){
-    Callback();
+function backToMainMenu(callback) {
+    callback();
 }
 function printExecutiveOptions(callback){
-    mainMenu.showMainMenu(executiveOptions, "Executive Menu", callback);
+    mainMenu.showMainMenu(executiveOptions, "Executive Menu",callback);
 }
 
 module.exports = {

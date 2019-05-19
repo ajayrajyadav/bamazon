@@ -1,10 +1,11 @@
 const inquirer = require('inquirer');
 
-function showMainMenu(options, callback) {
+function showMainMenu(options, menuname, callback) {
   const userOptions = Object.keys(options);
 
   inquirer.prompt([
     {
+      message: menuname,
       name: 'selectedOption',
       type: 'list',
       choices: userOptions
