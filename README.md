@@ -79,10 +79,10 @@ Created during Week 10 of Rutgers Coding Bootcamp. The goal was to create an Ama
 
 ## Technologies used
 - Node.js
-- Inquire NPM Package (https://www.npmjs.com/package/inquirer)
-- MYSQL NPM Package (https://www.npmjs.com/package/mysql)
-- CLI-Table NPM Package (https://www.npmjs.com/package/cli-table)
-- boxen NPM Package (https://www.npmjs.com/package/boxen)
+- [Inquire NPM Package](https://www.npmjs.com/package/inquirer)
+- [MYSQL NPM Package](https://www.npmjs.com/package/mysql)
+- [CLI-Table NPM Package](https://www.npmjs.com/package/cli-table)
+- [boxen NPM Package](https://www.npmjs.com/package/boxen)
 
 ### Prerequisites
 
