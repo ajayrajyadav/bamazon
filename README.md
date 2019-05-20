@@ -65,11 +65,11 @@ Created during Week 10 of Rutgers Coding Bootcamp. The goal was to create an Ama
         * If the manager selects `Back to Main Menu`, brings user to `Main Menu`
     
 ### `.env` parameters
-    * `DB_HOST`= where your mysql server is being hosted
-    * `PORT` = PORT number where your mysql server is being served at
-    * `DB_USER` = username for your mysql server
-    * `DB_PASSWORD `= password for the said username
-    * `DB_SCHEMA` = your database name
+    * DB_HOST = where your mysql server is being hosted
+    * PORT = PORT number where your mysql server is being served at
+    * DB_USER = username for your mysql server
+    * DB_PASSWORD = password for the said username
+    * DB_SCHEMA = your database name
 
 ---------------------
 
