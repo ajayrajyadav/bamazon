@@ -78,7 +78,7 @@ Created during Week 10 of Rutgers Coding Bootcamp. The goal was to create an Ama
 * Bamazon CLI (https://youtu.be/FCpB49fmcV8)
 
 ## Technologies used
-- Node.js
+- [Node.js](https://nodejs.org/en/)
 - [Inquire NPM Package](https://www.npmjs.com/package/inquirer)
 - [MYSQL NPM Package](https://www.npmjs.com/package/mysql)
 - [CLI-Table NPM Package](https://www.npmjs.com/package/cli-table)
