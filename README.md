@@ -88,7 +88,7 @@ Created during Week 10 of Rutgers Coding Bootcamp. The goal was to create an Ama
 
 ```
 - Node.js - Download the latest version of Node https://nodejs.org/en/
-- Create a MYSQL database called 'Bamazon', reference seed.sql
+- Create a MYSQL database called 'bamazon', reference seed.sql
 ```
 
 ## Built With
@@ -99,4 +99,4 @@ Created during Week 10 of Rutgers Coding Bootcamp. The goal was to create an Ama
 
 ## Authors
 
-* **Ajay Yadav** - *JS/MySQL/Node.js* - [Ajay Yadav](https://github.com/ajayrajyadav)
+* **Ajay Yadav** - [Ajay Yadav](https://github.com/ajayrajyadav)
