@@ -6,11 +6,7 @@ Created during Week 10 of Rutgers Coding Bootcamp. The goal was to create an Ama
 
 - Clone repo.
 - Run command in Terminal or Gitbash 'npm install'
-- Run command depending which mode you would like to be on:
-    * Customer - 'npm run customer'
-    * Manager - 'npm run manager'
-    * Exective - 'npm run exective'
-- Run 'ctrl + c' to exit each mode
+- Run 'Node index' to execute the bamazon CLI
 
 ### What this CLI does
 
