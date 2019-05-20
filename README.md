@@ -6,7 +6,8 @@ Created during Week 10 of Rutgers Coding Bootcamp. The goal was to create an Ama
 
 - Clone repo.
 - Run command in Terminal or Gitbash 'npm install'
-- Run 'Node index' to execute the bamazon CLI
+- Copy example.env and rename it .env, replace your own credentils.
+- Run `Node index` to execute the bamazon CLI
 
 ### What this CLI does
 
@@ -31,7 +32,7 @@ Created during Week 10 of Rutgers Coding Bootcamp. The goal was to create an Ama
                 * If the purchase goes through, it updates the stock quantity to reflect the purchase.
                 * It will also update the product sales in the department table.
 
-        * `Back to Main Menu` brings user back to the Main Menu
+        * `Exit` will gracefully exit the bamazon CLI
 
     * If `Manager` is selected then `Manager Menu` appears
         * `Manager Menu` Options:
@@ -63,6 +64,12 @@ Created during Week 10 of Rutgers Coding Bootcamp. The goal was to create an Ama
 
         * If the manager selects `Back to Main Menu`, brings user to `Main Menu`
     
+### `.env` parameters
+    * `DB_HOST`= where your mysql server is being hosted
+    * `PORT` = PORT number where your mysql server is being served at
+    * `DB_USER` = username for your mysql server
+    * `DB_PASSWORD `= password for the said username
+    * `DB_SCHEMA` = your database name
 
 ---------------------
 
